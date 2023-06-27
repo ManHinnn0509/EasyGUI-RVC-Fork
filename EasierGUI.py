@@ -1473,17 +1473,37 @@ def get_presets():
     
     return preset_names
 
+# ---------- List ./audios recursively
+
+def recursive_listdir():
+    l = []
+    files = [os.path.join(dp, f) for dp, dn, fn in os.walk('./audios') for f in fn]
+    for i in files:
+        if (i.endswith(('.wav','.mp3'))):
+            l.append(i)
+    return l
+
 def change_choices2():
+    
+    '''
     audio_files=[]
     for filename in os.listdir("./audios"):
         if filename.endswith(('.wav','.mp3')):
             audio_files.append(os.path.join('./audios',filename))
+    '''
+    audio_files = recursive_listdir()
     return {"choices": sorted(audio_files), "__type__": "update"}, {"__type__": "update"}
     
 audio_files=[]
+audio_files = recursive_listdir()
+
+'''
 for filename in os.listdir("./audios"):
     if filename.endswith(('.wav','.mp3')):
         audio_files.append(os.path.join('./audios',filename))
+'''
+
+# ----------
         
 def get_index():
     if check_for_name() != '':
